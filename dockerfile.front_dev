@@ -1,0 +1,7 @@
+FROM node:latest
+WORKDIR /app
+COPY ./OCR_FRONT/package*.json ./
+RUN npm install
+COPY ./OCR_FRONT ./
+EXPOSE 5173
+CMD ["npm", "run", "dev"]
