@@ -1,14 +1,12 @@
 import axios from "axios";
 
-export const subirArhivo = async () => {
+export const post = async ( url = "", datos = {}) => {
   try {
-    const holaMundoRespuesta = await axios.get(
-      "http://localhost:8000/api/hola-mundo"
-    );
-    const data = await holaMundoRespuesta.data;
+    const respuesta = await axios.post(url, datos);
+    const data = await respuesta.data;
 
-    console.log(data);
+    return [respuesta.status, data];
   } catch (error) {
-    console.log(error);
+    return [500, error];
   }
 };

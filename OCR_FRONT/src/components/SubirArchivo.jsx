@@ -1,13 +1,26 @@
 import { useRef } from "react";
-import { subirArhivo } from "../utils/requests";
+import { post } from "../utils/requests";
 
 const SubirArchivo = () => {
   const inputRef = useRef(null);
 
+  const procesarArchivo = async (archivo) => {
+    const formData = new FormData();
+    formData.append("archivo", archivo);
+    const [status, datos] = await post(
+      "http://localhost:8000/api/procesar-archivo/",
+      formData
+    );
+
+    console.log(status, datos);
+
+    inputRef.current.value = null;
+  };
+
   const manejarCambioDeValor = (o) => {
     const archivo = o.target.files[0];
     if (archivo) {
-      console.log(archivo);
+      procesarArchivo(archivo);
     }
   };
   return (
@@ -22,8 +35,7 @@ const SubirArchivo = () => {
       />
       <button
         onClick={() => {
-          // inputRef.current && inputRef.current.click();
-          subirArhivo();
+          inputRef.current && inputRef.current.click();
         }}
       >
         Selecciona el archivo
