@@ -73,19 +73,38 @@ class UPLOADTODRIVE(APIView):
 
     def post(self, request, *args, **kwargs):
         load_dotenv()
+        paginas: list = request.data["paginas"]
         carpeta_destino_id = os.getenv("GOOGLE_CARPETA_DESTINO_ID")
         machote_id = os.getenv("GOOGLE_MACHOTE_ID")
-        nuevo_nombre = "nuevo nombre"
-        copia_id = self.copiar_machote(
-            machote_id=machote_id,
-            nuevo_nombre=nuevo_nombre,
-            carpeta_destino_id=carpeta_destino_id,
+
+        for n in paginas:
+            nuevo_nombre = f"N° {n['fields']['solicitado_por']['numero']}"
+            copia_id = self.copiar_machote(
+                machote_id=machote_id,
+                nuevo_nombre=nuevo_nombre,
+                carpeta_destino_id=carpeta_destino_id,
+            )
+            remplazo = {
+                "{{numero}}": f"N° {n['fields']['solicitado_por']['numero']}",
+                "{{solicitado_por}}": "Solicitado por:",
+                "{{solicitado_por_nombre}}": n["fields"]["solicitado_por"]["nombre"],
+                "{{solicitado_por_telefono}}": n["fields"]["solicitado_por"][
+                    "telefono"
+                ],
+                "{{solicitado_por_correo}}": n["fields"]["solicitado_por"]["correo"],
+                "{{entregar_a}}": "Entregar a:",
+                "{{entregar_a_nombre}}": n["fields"]["entregar_a"]["nombre"],
+                "{{entregar_a_telefono}}": n["fields"]["entregar_a"]["telefono"],
+                "{{entregar_a_direccion}}": n["fields"]["entregar_a"]["direccion"],
+                "{{entregar_a_notas}}": n["fields"]["entregar_a"]["notas"],
+                "{{entregar_a_correo}}": n["fields"]["entregar_a"]["correo"],
+            }
+
+            self.replace_text(copia_id, remplazo)
+
+        return Response(
+            {"mensaje": "exito", "paginas": paginas}, status=status.HTTP_200_OK
         )
-        remplazos = {"{{nombre}}": "Juan Pérez", "{{edad}}": "20 años"}
-
-        self.replace_text(copia_id, remplazos)
-
-        return Response({"mensaje": "exito"}, status=status.HTTP_200_OK)
 
 
 class OCRAPIView(APIView):
@@ -444,6 +463,11 @@ class ExtractFieldsByPageAPIView(APIView):
                 r"Dirección[:\s]*(.+?)(?:Notas|$)",
                 entregar_text,
                 re.IGNORECASE | re.DOTALL,
+            )
+            result["entregar_a"]["correo"] = re.search(
+                r"Correo[:\s]*([\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,})",
+                solicitado_text,
+                re.IGNORECASE,
             )
             result["entregar_a"]["notas"] = re.search(
                 r"Notas[:\s]*(.+)", entregar_text, re.IGNORECASE | re.DOTALL

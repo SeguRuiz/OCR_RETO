@@ -62,6 +62,8 @@ const SubirArchivo = () => {
     );
 
     if (status == 200) {
+      console.log(datos);
+      
       setTextoExtraido(serializarDatos(datos).data);
     }
 
@@ -103,7 +105,7 @@ const SubirArchivo = () => {
         >
           {loading ? "Procesando..." : "Selecciona el archivo"}
         </button>
-        {textoExtraido.length > 0 && <SubirADrive datos={textoExtraido} />}
+        {textoExtraido.length > 0 && <SubirADrive paginas={textoExtraido} />}
         {textoExtraido.map((x, i) => (
           <div key={i}>
             <h2>
