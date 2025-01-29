@@ -30,9 +30,9 @@ SECRET_KEY = os.getenv("DJANGO-SECRET-KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS1")]
 
-CORS_ALLOWED_ORIGINS = [os.getenv('CORS_ALLOWED_ORIGINS1')]
+CORS_ALLOWED_ORIGINS = [os.getenv("CORS_ALLOWED_ORIGINS1")]
 
 # Application definition
 
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "api",
     "rest_framework",
-    "corsheaders"
+    "corsheaders",
 ]
 
 

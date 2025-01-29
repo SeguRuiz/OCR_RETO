@@ -2,8 +2,7 @@ import os
 import re
 from tempfile import NamedTemporaryFile
 
-import cv2
-import easyocr
+
 from dotenv import load_dotenv
 from google.cloud import vision
 from google.oauth2 import service_account
@@ -12,7 +11,7 @@ from google_auth import read_credentials
 from googleapiclient.discovery import build
 from pdf2image import convert_from_path
 from rest_framework import status
-from rest_framework.decorators import api_view
+
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
