@@ -78,6 +78,9 @@ const SubirArchivo = () => {
       procesarArchivo(archivo);
     }
   };
+  
+   
+
   return (
     <>
       <div
