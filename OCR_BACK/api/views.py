@@ -9,6 +9,7 @@ from google.cloud import vision
 from google.oauth2 import service_account
 from google_auth import project_root as here
 from google_auth import read_credentials
+from googleapiclient.discovery import build
 from pdf2image import convert_from_path
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -20,6 +21,7 @@ from .serializers import ArchivoSerializer
 
 # Create your views here.
 read_credentials()
+
 
 @api_view(["GET"])
 def hola_mundo(request):
@@ -34,6 +36,56 @@ def procesar_archivo(request):
         return Response({"mensaje": "El archivo es valido"}, status=status.HTTP_200_OK)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UPLOADTODRIVE(APIView):
+    SCOPES_DRIVE = ["https://www.googleapis.com/auth/drive"]
+    creds_path = here / os.getenv("GOOGLE_CREDENTIALS_FILE")
+    creds_init = service_account.Credentials.from_service_account_file(creds_path)
+
+    def copiar_machote(self, machote_id, carpeta_destino_id, nuevo_nombre):
+        drive_service = build("drive", "v3", credentials=self.creds_init)
+
+        copia_metadata = {
+            "name": nuevo_nombre,
+            "parents": [carpeta_destino_id],  # Especifica la carpeta de destino
+        }
+        copied_file = (
+            drive_service.files().copy(fileId=machote_id, body=copia_metadata).execute()
+        )
+        return copied_file["id"]
+
+    def replace_text(self, document_id, replacements):
+        requests = []
+        docs_service = build("docs", "v1", credentials=self.creds_init)
+        for old_text, new_text in replacements.items():
+            requests.append(
+                {
+                    "replaceAllText": {
+                        "containsText": {"text": old_text, "matchCase": True},
+                        "replaceText": new_text,
+                    }
+                }
+            )
+        docs_service.documents().batchUpdate(
+            documentId=document_id, body={"requests": requests}
+        ).execute()
+
+    def post(self, request, *args, **kwargs):
+        load_dotenv()
+        carpeta_destino_id = os.getenv("GOOGLE_CARPETA_DESTINO_ID")
+        machote_id = os.getenv("GOOGLE_MACHOTE_ID")
+        nuevo_nombre = "nuevo nombre"
+        copia_id = self.copiar_machote(
+            machote_id=machote_id,
+            nuevo_nombre=nuevo_nombre,
+            carpeta_destino_id=carpeta_destino_id,
+        )
+        remplazos = {"{{nombre}}": "Juan Pérez", "{{edad}}": "20 años"}
+
+        self.replace_text(copia_id, remplazos)
+
+        return Response({"mensaje": "exito"}, status=status.HTTP_200_OK)
 
 
 class OCRAPIView(APIView):
