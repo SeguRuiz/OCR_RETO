@@ -5,6 +5,7 @@ from .views import (
     GoogleVisionOCRAPIView,
     GoogleVisionOCRAPIViewPaginacion,
     OCRAPIView,
+    UPLOADTODRIVE,
     hola_mundo
 )
 
@@ -25,5 +26,10 @@ urlpatterns = [
         "procesar-archivo-paga-paginacion-opencv/",
         ExtractFieldsByPageAPIView.as_view(),
         name="procesar-archivo-paga-paginacion-opencv-url",
+    ),
+    path(
+        "subir-a-drive/",
+        UPLOADTODRIVE.as_view(),
+        name="subir-a-drive",
     ),
 ]

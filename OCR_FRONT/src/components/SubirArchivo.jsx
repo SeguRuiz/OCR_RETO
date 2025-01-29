@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { post } from "../utils/requests";
+import SubirADrive from "./SubirADrive";
 
 const textoExtraidoMock = [
   {
@@ -25,7 +26,7 @@ const textoExtraidoMock = [
 
 const SubirArchivo = () => {
   const inputRef = useRef(null);
-  const [textoExtraido, setTextoExtraido] = useState(textoExtraidoMock);
+  const [textoExtraido, setTextoExtraido] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const eliminarPalabra = (texto = "", palabra = "") => {
@@ -61,6 +62,8 @@ const SubirArchivo = () => {
     );
 
     if (status == 200) {
+      console.log(datos);
+      
       setTextoExtraido(serializarDatos(datos).data);
     }
 
@@ -75,6 +78,9 @@ const SubirArchivo = () => {
       procesarArchivo(archivo);
     }
   };
+  
+   
+
   return (
     <>
       <div
@@ -102,6 +108,7 @@ const SubirArchivo = () => {
         >
           {loading ? "Procesando..." : "Selecciona el archivo"}
         </button>
+        {textoExtraido.length > 0 && <SubirADrive paginas={textoExtraido} />}
         {textoExtraido.map((x, i) => (
           <div key={i}>
             <h2>
