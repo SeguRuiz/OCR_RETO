@@ -10,12 +10,13 @@ import {
 import AddToDriveIcon from "@mui/icons-material/AddToDrive";
 import CheckIcon from "@mui/icons-material/Check";
 
+
 const SubirADrive = ({ paginas = [], setContenidos, setDisabled }) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const subirAdrive = async () => {
     setDisabled(true)
-    setLoading(true);
+    setLoading(true)
     const [status, datos] = await postDrive(
       "http://localhost:8000/api/subir-a-drive/",
       { paginas: paginas }
@@ -23,6 +24,8 @@ const SubirADrive = ({ paginas = [], setContenidos, setDisabled }) => {
     if (status == 200) {
       setContenidos([]);
       setOpen(true);
+    }else{
+        alert('Ocurrio un error al subir los archivos')
     }
     setLoading(false);
     setDisabled(false)

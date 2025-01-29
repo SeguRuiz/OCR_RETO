@@ -60,7 +60,7 @@ const SubirArchivo = ({ setContenidos, contenidos = [] }) => {
   const procesarArchivo = async (archivo) => {
     setLoading(true);
     const formData = new FormData();
-    formData.append("file", archivo);
+    formData.append("file", archivo)
     const [status, datos] = await post(
       "http://localhost:8000/api/procesar-archivo-paginacion/",
       formData
@@ -68,6 +68,8 @@ const SubirArchivo = ({ setContenidos, contenidos = [] }) => {
 
     if (status == 200) {
       setContenidos(serializarDatos(datos).data);
+    } else {
+      alert("Ocurrio un error al escanear los archivos");
     }
 
     setLoading(false);
