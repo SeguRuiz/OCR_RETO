@@ -62,7 +62,7 @@ const SubirArchivo = ({ setContenidos, contenidos = [] }) => {
     const formData = new FormData();
     formData.append("file", archivo)
     const [status, datos] = await post(
-      "https://ocr-reto.onrender.com/api/procesar-archivo-paginacion",
+      "https://ocr-reto.onrender.com/api/procesar-archivo-paginacion/",
       formData
     );
 

@@ -30,10 +30,10 @@ SECRET_KEY = os.getenv("DJANGO-SECRET-KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['ocr-reto.onrender.com']
+ALLOWED_HOSTS = ["ocr-reto.onrender.com"]
 
-CORS_ALLOWED_ORIGINS = ['*']
-
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [

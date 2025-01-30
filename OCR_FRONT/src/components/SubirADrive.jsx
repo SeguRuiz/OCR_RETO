@@ -18,7 +18,7 @@ const SubirADrive = ({ paginas = [], setContenidos, setDisabled }) => {
     setDisabled(true)
     setLoading(true)
     const [status, datos] = await postDrive(
-      "https://ocr-reto.onrender.com/api/subir-a-drive",
+      "https://ocr-reto.onrender.com/api/subir-a-drive/",
       { paginas: paginas }
     );
     if (status == 200) {
