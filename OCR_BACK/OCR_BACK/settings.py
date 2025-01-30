@@ -32,7 +32,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['ocr-reto.onrender.com']
 
-CORS_ALLOWED_ORIGINS = ['https://ocr-reto-front.onrender.com/']
+CORS_ALLOWED_ORIGINS = ['https://ocr-reto-front.onrender.com']
 
 # Application definition
 
