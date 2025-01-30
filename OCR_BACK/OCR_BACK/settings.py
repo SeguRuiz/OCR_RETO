@@ -28,11 +28,11 @@ load_dotenv()
 SECRET_KEY = os.getenv("DJANGO-SECRET-KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["ocr-reto.onrender.com"]
 
-CORS_ALLOW_ALL_ORIGINS = True
+
 
 # Application definition
 
@@ -59,6 +59,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = [
+    "https://ocr-reto.onrender.com/",
 ]
 
 ROOT_URLCONF = "OCR_BACK.urls"
