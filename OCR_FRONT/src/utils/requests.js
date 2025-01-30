@@ -1,8 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
+
+const api = axios.create({
+    baseURL: "https://ocr-reto.onrender.com/api",
+  });
+
 export const post = async (url = "", datos = {}) => {
   try {
-    const respuesta = await axios.post(url, datos, {
+    const respuesta = await api.post(url, datos, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -17,7 +22,7 @@ export const post = async (url = "", datos = {}) => {
 
 export const postDrive = async (url = "", datos = {}) => {
   try {
-    const respuesta = await axios.post(url, datos);
+    const respuesta = await api.post(url, datos);
     const data = await respuesta.data;
 
     return [respuesta.status, data];
@@ -25,6 +30,7 @@ export const postDrive = async (url = "", datos = {}) => {
     return [500, error];
   }
 };
+
 
 const useAxiosProgress = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
