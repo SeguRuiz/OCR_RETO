@@ -33,7 +33,7 @@ DEBUG = False
 ALLOWED_HOSTS = ["ocr-reto.onrender.com"]
 
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_ALL_ORIGINS = ["*"]
+
 # Application definition
 
 INSTALLED_APPS = [
