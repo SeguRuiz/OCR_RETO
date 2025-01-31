@@ -27,7 +27,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./OCR_BACK .
 
 # Exponer el puerto en el que corre Django
-EXPOSE 8000
+EXPOSE 9000
 
 # Comando para ejecutar ngrok y la API
 CMD ["./start.sh"]
