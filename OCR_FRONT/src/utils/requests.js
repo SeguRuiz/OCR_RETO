@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 
 const api = axios.create({
-    baseURL: "https://7b49-179-60-174-32.ngrok-free.app",
+    baseURL: "https://7b49-179-60-174-32.ngrok-free.app/api",
   });
 
 export const post = async (url = "", datos = {}) => {
