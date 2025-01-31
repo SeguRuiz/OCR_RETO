@@ -4,6 +4,17 @@
 Este proyecto realiza OCR en archivos PDF con imágenes escaneadas para extraer información especifica y guardarla en .
 carpetas especificas de google drive.
 
+## Tecnologías utilizadas
+- **Python**
+- **JavaScript**
+- **React**
+- **Django**
+- **Google-Cloud-Vision**
+- **Gooogle-Cloud-Services**
+- **ngrok**
+- **Docker**
+- **Render**
+
 ## Flujo de procesamiento
 1. **Carga del archivo**: El usuario sube un PDF con imágenes escaneadas.
 2. **Conversión de PDF a imágenes**: Se extraen las páginas y se convierten a imágenes.
