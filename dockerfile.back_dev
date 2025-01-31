@@ -1,21 +1,33 @@
 
 FROM python:3.12.6
 
+WORKDIR /app
 
 RUN apt-get update && apt-get install -y poppler-utils
 
+# Instalar dependencias del sistema (necesarias para ngrok y jq)
+RUN apt-get update && apt-get install -y \
+    wget \
+    unzip \
+    jq \
+    && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+# Descargar e instalar ngrok
+RUN wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz -O ngrok.tgz \
+    && tar -xzf ngrok.tgz \
+    && rm ngrok.tgz \
+    && chmod +x ngrok \
+    && mv ngrok /usr/local/bin/ngrok
 
-
+# Copiar los archivos de requisitos e instalar dependencias de Python
 COPY ./OCR_BACK/requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-
+# Copiar el resto del código
 COPY ./OCR_BACK .
 
-
+# Exponer el puerto en el que corre Django
 EXPOSE 8000
 
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Comando para ejecutar ngrok y la API
+CMD ["./start.sh"]

@@ -1,6 +1,7 @@
 # compose
 compose.yml
 wait-for-it.sh
+start.sh
 
 # json
 intranet-admin-key-info.json
