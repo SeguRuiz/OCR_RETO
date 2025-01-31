@@ -1,7 +1,7 @@
 # OCR-RETO
 
 ## Descripción
-Este proyecto realiza OCR en archivos PDF con imágenes escaneadas para extraer información especifica y guardarla en .
+Este proyecto realiza OCR en archivos PDF con imágenes escaneadas para extraer información especifica y guardarla en
 carpetas especificas de google drive.
 
 ## Tecnologías utilizadas
