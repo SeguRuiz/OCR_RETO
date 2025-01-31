@@ -139,7 +139,7 @@ class ExtractFieldsByPageAPIView(APIView):
 
     def extract_fields(self, text):
         """
-        Extract fields specifically from 'Solicitado por' and 'Entregar a' sections in the text.
+        Extrae los campos requeridos de solicitado por y entregar utilizando patrones de regex.
         """
         result = {"solicitado_por": {}, "entregar_a": {}}
 
