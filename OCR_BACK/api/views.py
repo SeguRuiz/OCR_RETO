@@ -115,6 +115,7 @@ class ExtractFieldsByPageAPIView(APIView):
             temp_images.append(temp_path)
         return temp_images
 
+
     def extract_text_from_image(self, image_path):
         """
         Usar Google Cloud Vision API para extraer texto de una imagen.
