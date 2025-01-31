@@ -29,7 +29,7 @@ carpetas especificas de google drive.
   - Guarda el documento en la carpeta de destino.
 
 ## Link del proyecto
-[https://ocr-reto-front.onrender.com/](#)
+[OCR_FRONTEND](https://ocr-reto-front.onrender.com/)
 
 ## Contacto
 - **Correo**: ruiz96199@gmail.com o lsegura@fwd.com
